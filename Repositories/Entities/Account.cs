@@ -29,5 +29,9 @@ namespace Repositories.Entities
 		public DateTime? DeletionDate { get; set; }
 		public Guid? DeletedBy { get; set; }
 		public bool IsDeleted { get; set; } = false;
-	}
+        public ICollection<Cart>? Carts { get; set; }
+        public ICollection<Order>? Orders { get; set; }
+        public ICollection<Notification>? Notifications { get; set; }
+        public ICollection<ChatMessage>? ChatMessages { get; set; }
+    }
 }
