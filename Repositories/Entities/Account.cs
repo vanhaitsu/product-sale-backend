@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Repositories.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Entities
 {
+	[Table("Account")]
 	public class Account : IdentityUser<Guid>
 	{
 		public string? FirstName { get; set; }
@@ -33,5 +35,6 @@ namespace Repositories.Entities
         public ICollection<Order>? Orders { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
         public ICollection<ChatMessage>? ChatMessages { get; set; }
+        public ICollection<FeedBack>? FeedBacks { get; set; }
     }
 }

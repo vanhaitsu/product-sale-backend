@@ -1,5 +1,4 @@
-﻿using Repositories.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Repositories.Entities
 {
-    [Table("Category")]
-    public class Category : BaseEntity
+    [Table("Brand")]
+    public class Brand : BaseEntity
     {
-        public string CategoryName { get; set; } = null!;
-        public GeneralStatus Status { get; set; } = GeneralStatus.Active;
+        public string BrandName { get; set; } = null!;
+        public string? Description { get; set; }
+        public string? LogoUrl { get; set; }
         public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

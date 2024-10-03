@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace Repositories.Entities
 {
-    [Table("CartItem")]
-    public class CartItem : BaseEntity
+    [Table("ProductImage")]
+    public class ProductImage : BaseEntity
     {
-        public Guid CartID { get; set; }
         public Guid ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public Cart Cart { get; set; } = null!;
         public Product Product { get; set; } = null!;
+        public string ImgUrl { get; set; } = null!;
+        public GeneralStatus Status { get; set; } = GeneralStatus.Active;
     }
 }

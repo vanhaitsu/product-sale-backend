@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Repositories.Entities
 {
-    [Table("CartItem")]
-    public class CartItem : BaseEntity
+    [Table("FeedBack")]
+    public class FeedBack : BaseEntity
     {
-        public Guid CartID { get; set; }
         public Guid ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public Cart Cart { get; set; } = null!;
         public Product Product { get; set; } = null!;
+        public Guid AccountID { get; set; }
+        public Account Account { get; set; } = null!;
+        public int Rating { get; set; }
+        public string Description { get; set; } = null!;
+
     }
 }
