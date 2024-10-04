@@ -20,6 +20,9 @@ namespace Repositories
         public DbSet<Notification> Notifications { get; set; } = null!;
         public DbSet<ChatMessage> ChatMessages { get; set; } = null!;
         public DbSet<StoreLocation> StoreLocations { get; set; } = null!;
+        public DbSet<ProductImage> ProductImages { get; set; } = null!;
+        public DbSet<Brand> Brands { get; set; } = null!;
+        public DbSet<FeedBack> FeedBacks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
