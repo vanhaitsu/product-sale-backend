@@ -71,8 +71,8 @@ namespace Repositories
 
                 entity.HasOne(x => x.Account)
                       .WithOne(a => a.Cart)
-                      .HasForeignKey<Cart>(x => x.AccountID) 
-                      .OnDelete(DeleteBehavior.Restrict); 
+                      .HasForeignKey<Cart>(x => x.AccountID)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // CartItem entity configuration
