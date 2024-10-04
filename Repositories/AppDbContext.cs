@@ -70,9 +70,9 @@ namespace Repositories
                 entity.Property(x => x.TotalPrice).HasColumnType("decimal(18,2)");
 
                 entity.HasOne(x => x.Account)
-                      .WithOne(a => a.Cart)
-                      .HasForeignKey<Cart>(x => x.AccountID) 
-                      .OnDelete(DeleteBehavior.Restrict); 
+                      .WithMany(a => a.Carts)
+                      .HasForeignKey(x => x.AccountID)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // CartItem entity configuration
