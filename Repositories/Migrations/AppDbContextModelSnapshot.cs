@@ -288,7 +288,7 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand");
+                    b.ToTable("Brand", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Cart", b =>
@@ -332,7 +332,7 @@ namespace Repositories.Migrations
                     b.HasIndex("AccountID")
                         .IsUnique();
 
-                    b.ToTable("Cart");
+                    b.ToTable("Cart", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.CartItem", b =>
@@ -380,7 +380,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItem", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Category", b =>
@@ -420,7 +420,7 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.ChatMessage", b =>
@@ -465,7 +465,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.ToTable("ChatMessage");
+                    b.ToTable("ChatMessage", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.FeedBack", b =>
@@ -514,7 +514,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("FeedBack");
+                    b.ToTable("FeedBack", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Notification", b =>
@@ -562,7 +562,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notification", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Order", b =>
@@ -620,7 +620,7 @@ namespace Repositories.Migrations
                     b.HasIndex("CartID")
                         .IsUnique();
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -668,7 +668,7 @@ namespace Repositories.Migrations
                     b.HasIndex("OrderID")
                         .IsUnique();
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Product", b =>
@@ -732,7 +732,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.ProductImage", b =>
@@ -776,7 +776,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImage", (string)null);
                 });
 
             modelBuilder.Entity("Repositories.Entities.Role", b =>
@@ -853,7 +853,7 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoreLocation");
+                    b.ToTable("StoreLocation", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

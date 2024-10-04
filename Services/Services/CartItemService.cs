@@ -53,6 +53,7 @@ namespace Services.Services
 
             CartItem cartItem = _mapper.Map<CartItem>(cartItemCreateModel);
             cartItem.CartID = cart.Id;
+            cartItem.Price += product.Price * cartItemCreateModel.Quantity;
 
             await _unitOfWork.CartItemRepository.AddAsync(cartItem);
 
