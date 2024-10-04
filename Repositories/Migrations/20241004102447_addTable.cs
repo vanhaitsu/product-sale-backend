@@ -48,6 +48,7 @@ namespace Repositories.Migrations
                     DeletionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CartID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -434,7 +435,6 @@ namespace Repositories.Migrations
                     AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -557,7 +557,8 @@ namespace Repositories.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_AccountID",
                 table: "Cart",
-                column: "AccountID");
+                column: "AccountID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItem_CartID",

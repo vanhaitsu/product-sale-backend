@@ -137,6 +137,9 @@ namespace Repositories.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("CartID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -326,7 +329,8 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountID");
+                    b.HasIndex("AccountID")
+                        .IsUnique();
 
                     b.ToTable("Cart");
                 });
@@ -475,9 +479,6 @@ namespace Repositories.Migrations
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -909,8 +910,8 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Repositories.Entities.Cart", b =>
                 {
                     b.HasOne("Repositories.Entities.Account", "Account")
-                        .WithMany("Carts")
-                        .HasForeignKey("AccountID")
+                        .WithOne("Cart")
+                        .HasForeignKey("Repositories.Entities.Cart", "AccountID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1040,7 +1041,8 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Repositories.Entities.Account", b =>
                 {
-                    b.Navigation("Carts");
+                    b.Navigation("Cart")
+                        .IsRequired();
 
                     b.Navigation("ChatMessages");
 
