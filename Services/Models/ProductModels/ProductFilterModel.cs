@@ -11,6 +11,8 @@ namespace Services.Models.ProductModels
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public Guid? CategoryID { get; set; }
+        public Guid? BrandId { get; set; }
+        public int? Rating { get; set; }
         public string? Search { get; set; }
         protected override int MinPageSize { get; set; } = PaginationConstant.DEFAULT_MIN_PAGE_SIZE;
         protected override int MaxPageSize { get; set; } = PaginationConstant.DEFAULT_MAX_PAGE_SIZE;

@@ -14,5 +14,8 @@ namespace Repositories.Interfaces
 			int? pageIndex = null,
 			int? pageSize = null
 		);
-	}
+
+		Task<Account> GetAccountById(Guid id);
+
+    }
 }
