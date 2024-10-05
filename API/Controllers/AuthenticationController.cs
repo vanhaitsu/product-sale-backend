@@ -7,7 +7,7 @@ using Services.Models.TokenModels;
 
 namespace API.Controllers
 {
-    [Route("api/v1/authentication")]
+    [Route("api/authentications")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
