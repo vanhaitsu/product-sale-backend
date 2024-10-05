@@ -6,7 +6,7 @@ using Services.Models.AccountModels;
 
 namespace API.Controllers
 {
-    [Route("api/v1/accounts")]
+    [Route("api/accounts")]
     [ApiController]
     public class AccountController : ControllerBase
     {

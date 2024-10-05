@@ -18,5 +18,10 @@ namespace Repositories.Repositories
             return await _dbContext.Carts
                 .FirstOrDefaultAsync(cp => cp.AccountID == accountId);
         }
+        public async Task<Cart> GetById(Guid cartId)
+        {
+            return await _dbContext.Carts
+                .FirstOrDefaultAsync(_ => _.Id == cartId);
+        }
     }
 }
