@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,11 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241006081106_AddStockQuantityToProduct")]
+    partial class AddStockQuantityToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -578,7 +581,7 @@ namespace Repositories.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<Guid>("CartItemID")
+                    b.Property<Guid>("CartID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -615,7 +618,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.HasIndex("CartItemID");
+                    b.HasIndex("CartID");
 
                     b.ToTable("Order");
                 });
@@ -986,15 +989,15 @@ namespace Repositories.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Repositories.Entities.CartItem", "CartItem")
+                    b.HasOne("Repositories.Entities.Cart", "Cart")
                         .WithMany("Orders")
-                        .HasForeignKey("CartItemID")
+                        .HasForeignKey("CartID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Account");
 
-                    b.Navigation("CartItem");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -1059,10 +1062,7 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Repositories.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
-                });
 
-            modelBuilder.Entity("Repositories.Entities.CartItem", b =>
-                {
                     b.Navigation("Orders");
                 });
 

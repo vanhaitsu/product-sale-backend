@@ -16,6 +16,5 @@ namespace Repositories.Entities
         public CartStatus Status { get; set; } = CartStatus.Active;
         public Account Account { get; set; } = null!;
         public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
-        public Order? Order { get; set; }
     }
 }

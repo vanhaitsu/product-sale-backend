@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,11 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005154225_updateDatabase")]
+    partial class updateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,7 +332,8 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountID");
+                    b.HasIndex("AccountID")
+                        .IsUnique();
 
                     b.ToTable("Cart");
                 });
@@ -578,7 +582,7 @@ namespace Repositories.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<Guid>("CartItemID")
+                    b.Property<Guid>("CartID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -615,7 +619,8 @@ namespace Repositories.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.HasIndex("CartItemID");
+                    b.HasIndex("CartID")
+                        .IsUnique();
 
                     b.ToTable("Order");
                 });
@@ -717,9 +722,6 @@ namespace Repositories.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("int");
 
                     b.Property<string>("TechnicalSpecifications")
                         .IsRequired()
@@ -909,8 +911,8 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Repositories.Entities.Cart", b =>
                 {
                     b.HasOne("Repositories.Entities.Account", "Account")
-                        .WithMany("Cart")
-                        .HasForeignKey("AccountID")
+                        .WithOne("Cart")
+                        .HasForeignKey("Repositories.Entities.Cart", "AccountID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -986,15 +988,15 @@ namespace Repositories.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Repositories.Entities.CartItem", "CartItem")
-                        .WithMany("Orders")
-                        .HasForeignKey("CartItemID")
+                    b.HasOne("Repositories.Entities.Cart", "Cart")
+                        .WithOne("Order")
+                        .HasForeignKey("Repositories.Entities.Order", "CartID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Account");
 
-                    b.Navigation("CartItem");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -1040,7 +1042,8 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Repositories.Entities.Account", b =>
                 {
-                    b.Navigation("Cart");
+                    b.Navigation("Cart")
+                        .IsRequired();
 
                     b.Navigation("ChatMessages");
 
@@ -1059,11 +1062,8 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Repositories.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
-                });
 
-            modelBuilder.Entity("Repositories.Entities.CartItem", b =>
-                {
-                    b.Navigation("Orders");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Category", b =>

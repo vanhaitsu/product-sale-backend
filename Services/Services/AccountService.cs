@@ -88,7 +88,7 @@ namespace Services.Services
         private async Task SendVerificationEmail(Account account)
         {
             await _emailService.SendEmailAsync(account.Email!, "Verify your email",
-                GenerateEmailBody(account.FirstName, account.VerificationCode), true);
+                $"Your verification code is {account.VerificationCode}. The code will expire in 15 minutes.", true);
         }
         private string GenerateEmailBody(string fullName, string otp)
         {

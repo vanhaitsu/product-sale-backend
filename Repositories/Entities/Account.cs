@@ -32,7 +32,7 @@ namespace Repositories.Entities
 		public Guid? DeletedBy { get; set; }
 		public bool IsDeleted { get; set; } = false;
 		public Guid CartID { get; set; }
-		public Cart Cart { get; set; } = null!;
+		public ICollection<Cart> Cart { get; set; } = null!;
         public ICollection<Order>? Orders { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
         public ICollection<ChatMessage>? ChatMessages { get; set; }

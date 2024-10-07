@@ -7,7 +7,8 @@
 		IProductRepository ProductRepository { get; }
 		ICartRepository CartRepository { get; }
 		ICartItemRepository CartItemRepository { get; }
-
-		public Task<int> SaveChangeAsync();
+		IOrderRepository OrderRepository { get; }
+		IPaymentRepository PaymentRepository { get; }
+        public Task<int> SaveChangeAsync();
 	}
 }

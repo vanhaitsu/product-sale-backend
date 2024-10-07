@@ -62,6 +62,13 @@ namespace API
             services.AddScoped<ICartItemService, CartItemService>();
             services.AddScoped<ICartItemRepository, CartItemRepository>();
 
+            //Payment
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
+
+            //Order
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }
