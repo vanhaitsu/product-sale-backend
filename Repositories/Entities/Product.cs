@@ -14,6 +14,7 @@ namespace Repositories.Entities
         public string BriefDescription { get; set; } = null!;
         public  string FullDescription { get; set; } = null!;
         public string TechnicalSpecifications { get; set; } = null!;
+        public int StockQuantity { get; set; } 
         public decimal Price { get; set; }
         /*public string ImageURL { get; set; } = null!;*/
         public Guid CategoryID { get; set; }

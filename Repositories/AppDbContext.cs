@@ -67,18 +67,19 @@ namespace Repositories
             // Cart entity configuration
             modelBuilder.Entity<Cart>(entity =>
             {
-                entity.Property(x => x.TotalPrice).HasColumnType("decimal(18,2)");
+                entity.Property(x => x.TotalPrice)
+                      .HasColumnType("decimal(18,2)");
 
                 entity.HasOne(x => x.Account)
-                      .WithOne(a => a.Cart)
-                      .HasForeignKey<Cart>(x => x.AccountID)
+                      .WithMany(a => a.Cart)
+                      .HasForeignKey(x => x.AccountID)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
             // CartItem entity configuration
             modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(ci => ci.Id); 
+                entity.HasKey(ci => ci.Id);
 
                 entity.HasOne(ci => ci.Cart)
                       .WithMany(c => c.CartItems)
@@ -89,22 +90,24 @@ namespace Repositories
                       .WithMany(p => p.CartItems)
                       .HasForeignKey(ci => ci.ProductID)
                       .OnDelete(DeleteBehavior.Restrict)
-                      .HasConstraintName("FK_CartItems_Products_ProductID"); 
+                      .HasConstraintName("FK_CartItems_Products_ProductID");
             });
 
             // Order entity configuration
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(x => x.BillingAddress).IsRequired().HasMaxLength(256);
+                entity.Property(x => x.BillingAddress)
+                      .IsRequired()
+                      .HasMaxLength(256);
 
                 entity.HasOne(x => x.Account)
                       .WithMany(a => a.Orders)
                       .HasForeignKey(x => x.AccountID)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(x => x.Cart)
-                      .WithOne(c => c.Order)
-                      .HasForeignKey<Order>(x => x.CartID)
+                entity.HasOne(x => x.CartItem)
+                      .WithMany(c => c.Orders)
+                      .HasForeignKey(x => x.CartItemID)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

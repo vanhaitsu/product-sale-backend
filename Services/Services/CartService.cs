@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Repositories.Entities;
+using Repositories.Enums;
 using Repositories.Interfaces;
+using Repositories.Models.OrderModels;
+using Repositories.Models.VNPayModels;
 using Services.Interfaces;
 using Services.Models.ResponseModels;
 
@@ -10,11 +14,13 @@ namespace Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IPaymentGatewayService _paymentGatewayService;
 
-        public CartService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CartService(IUnitOfWork unitOfWork, IMapper mapper, IPaymentGatewayService paymentGatewayService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _paymentGatewayService = paymentGatewayService;
         }
 
         public async Task<ResponseDataModel<Cart>> Create(Guid accountId)
@@ -66,5 +72,6 @@ namespace Services.Services
                 ? new ResponseModel { Message = "Cart cleared successfully.", Status = true }
                 : new ResponseModel { Message = "Failed to clear the cart.", Status = false };
         }
+       
     }
 }

@@ -16,5 +16,7 @@ namespace Repositories.Entities
         public decimal Price { get; set; }
         public Cart Cart { get; set; } = null!;
         public Product Product { get; set; } = null!;
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+
     }
 }
