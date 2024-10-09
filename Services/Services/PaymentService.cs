@@ -5,15 +5,9 @@ using Repositories.Enums;
 using Repositories.Interfaces;
 using Repositories.Models.OrderModels;
 using Repositories.Models.PaymentModels;
-using Repositories.Models.ProductModels;
 using Repositories.Models.VNPayModels;
 using Services.Interfaces;
 using Services.Models.ResponseModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Services
 {

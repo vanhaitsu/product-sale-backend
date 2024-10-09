@@ -70,6 +70,10 @@ namespace API
             //Order
             services.AddScoped<IOrderRepository, OrderRepository>();
 
+            //Notification
+            services.AddScoped<IOneSignalPushNotificationService, OneSignalPushNotificationService>();
+            services.AddHttpClient<OneSignalPushNotificationService>();
+
             return services;
         }
     }

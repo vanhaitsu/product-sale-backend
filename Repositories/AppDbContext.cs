@@ -47,6 +47,7 @@ namespace Repositories
             // Product entity configuration
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
                 entity.Property(x => x.ProductName).IsRequired().HasMaxLength(100);
                 entity.Property(x => x.BriefDescription).HasMaxLength(256);
                 entity.Property(x => x.FullDescription).HasMaxLength(1000);
@@ -59,10 +60,13 @@ namespace Repositories
                       .HasConstraintName("FK_CartItems_Products_ProductID");
             });
 
+            modelBuilder.Entity<Brand>().Property(e => e.Id).HasDefaultValueSql("NEWID()");
+
             // Category entity configuration
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.Property(x => x.CategoryName).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
 
             // Cart entity configuration
