@@ -16,6 +16,7 @@ namespace Repositories
         public DbSet<Cart> Carts { get; set; } = null!;
         public DbSet<CartItem> CartItems { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderCartItem> OrderCartItems { get; set; } = null!;
         public DbSet<Payment> Payments { get; set; } = null!;
         public DbSet<Notification> Notifications { get; set; } = null!;
         public DbSet<ChatMessage> ChatMessages { get; set; } = null!;
@@ -92,24 +93,28 @@ namespace Repositories
                       .OnDelete(DeleteBehavior.Restrict)
                       .HasConstraintName("FK_CartItems_Products_ProductID");
             });
-
+            // OrderCartItem
+            modelBuilder.Entity<OrderCartItem>(entity =>
+            {
+                entity.HasKey(oci => oci.Id);
+                entity.HasOne(oci => oci.Order)
+                      .WithMany(oc => oc.OrderCartItems)
+                      .HasForeignKey(oci => oci.OrderID);
+                entity.HasOne(ci => ci.Product)
+                      .WithMany(p => p.OrderCartItems)
+                      .HasForeignKey(ci => ci.ProductID);
+            });
             // Order entity configuration
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(x => x.BillingAddress)
-                      .IsRequired()
-                      .HasMaxLength(256);
+                entity.HasKey(o => o.Id);
 
-                entity.HasOne(x => x.Account)
+
+                entity.HasOne(o => o.Account)
                       .WithMany(a => a.Orders)
-                      .HasForeignKey(x => x.AccountID)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(x => x.CartItem)
-                      .WithMany(c => c.Orders)
-                      .HasForeignKey(x => x.CartItemID)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .HasForeignKey(o => o.AccountID);
             });
+          
 
             // Payment entity configuration
             modelBuilder.Entity<Payment>(entity =>

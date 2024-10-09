@@ -22,6 +22,7 @@ namespace Repositories.Entities
         public Guid BrandID { get; set; }
         public Brand Brand { get; set; } = null!;
         public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public ICollection<OrderCartItem> OrderCartItems { get; set; } = new List<OrderCartItem>();
         public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public ICollection<FeedBack> FeedBacks { get; set; } = new List<FeedBack>();
     }

@@ -26,7 +26,7 @@ namespace Services.Services
         public async Task<ResponseModel> VNPayMethod(OrderModel orderModel, HttpContext context)
         {
             var result = new ResponseModel();
-            var cart = await _unitOfWork.CartRepository.GetAsync(orderModel.CartID, "Account, CartItems");
+            var cart = await _unitOfWork.CartRepository.GetAsync(orderModel.AccountID, "Account, CartItems");
             if (cart == null)
             {
                 return new ResponseModel { Message = "Cart cannot be found.", Status = false };
@@ -35,7 +35,21 @@ namespace Services.Services
             {
                 return new ResponseModel { Message = "Must have at least one product to checkout.", Status = false };
             }
-            var user = await _unitOfWork.AccountRepository.GetAccountById(orderModel.AccountID);
+            var checkInformation = await CheckInformation(orderModel.AccountID, 
+                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductID).ToList(),
+                                                          orderModel.OrderCartItemModels.Select(_ => _.Quantity).ToList());
+            if(checkInformation == false)
+            {
+                return new ResponseModel { Message = "Incorrect data.", Status = false };
+            }
+            var checkStockProduct = await CheckStockQuantity(orderModel.AccountID,
+                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductID).ToList(),
+                                                          orderModel.OrderCartItemModels.Select(_ => _.Quantity).ToList());
+            if (checkInformation == false)
+            {
+                return new ResponseModel { Message = "Incorrect data.", Status = false };
+            }
+            var user = cart.Account;
             if (user == null)
             {
                 return new ResponseModel { Message = "User cannot be found.", Status = false };
@@ -65,15 +79,64 @@ namespace Services.Services
             };
 
         }
+        public async Task<bool> CheckInformation(Guid userId, List<Guid> productIds, List<int> quantities)
+        {
+            var cart = await _unitOfWork.CartRepository.GetByAccount(userId);
+
+            if (cart == null || cart.CartItems.Count == 0 || productIds.Count != quantities.Count)
+            {
+                return false;
+              
+
+            }
+            for (int i = 0; i < productIds.Count; i++)
+            {
+                var productId = productIds[i];
+                var quantity = quantities[i];
+               
+                var cartItem = cart.CartItems.FirstOrDefault(_ => _.ProductID == productId);
+                if (cartItem == null || cartItem.Quantity != quantity)
+                {
+                    return false;
+
+                }
+            
+
+            }
+
+            return true;
+
+        }
+        public async Task<bool> CheckStockQuantity( Guid userId, List<Guid> productIds, List<int> quantities)
+        {
+            var cart = await _unitOfWork.CartRepository.GetByAccount(userId);
+            for (int i = 0; i < productIds.Count; i++)
+            {
+                var productId = productIds[i];
+                var quantity = quantities[i];
+                var product = cart.CartItems.Select(_ => _.Product).FirstOrDefault(_ => _.Id == productId);
+                var stockProduct = product.StockQuantity;
+                if (stockProduct < quantity)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         private Order CreateOrder(Cart cart, Account user, OrderModel orderModel)
         {
             return new Order
             {
                 Id = Guid.NewGuid(),
-                CartItemID = cart.Id,
                 AccountID = user.Id,
                 BillingAddress = orderModel.BillingAddress,
                 PaymentMethod = PaymentMethod.VNPay,
+                OrderCartItems = (ICollection<OrderCartItem>)orderModel.OrderCartItemModels.Select(_ => new OrderCartItem
+                {
+                    ProductID = _.ProductID,
+                    Quantity = _.Quantity,
+                    Price = _.Price
+                }),
                 Payment = new Payment
                 {
                     Id = Guid.NewGuid(),

@@ -16,12 +16,18 @@ namespace Repositories.Repositories
         public async Task<Cart> GetByAccount(Guid accountId)
         {
             return await _dbContext.Carts
-                .FirstOrDefaultAsync(cp => cp.AccountID == accountId);
+                                   .Include(_ => _.Account)
+                                   .Include(_ => _.CartItems)
+                                   .ThenInclude(_ => _.Product)
+                                   .FirstOrDefaultAsync(_ => _.AccountID == accountId);
         }
         public async Task<Cart> GetById(Guid cartId)
         {
             return await _dbContext.Carts
-                .FirstOrDefaultAsync(_ => _.Id == cartId);
+                                   .Include(_ => _.Account)
+                                   .Include(_ => _.CartItems)
+                                   .ThenInclude(_ => _.Product)
+                                   .FirstOrDefaultAsync(_ => _.Id == cartId);
         }
     }
 }
