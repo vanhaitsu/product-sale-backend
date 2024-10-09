@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Polaby.Services.Notification;
+using Services.Interfaces;
 using System.Text;
 
-namespace Services.Notification
+namespace Services.Services
 {
     
     public class OneSignalPushNotificationService : IOneSignalPushNotificationService

@@ -1,5 +1,5 @@
 ﻿
-namespace Polaby.Services.Notification
+namespace Services.Interfaces
 {
 
     public interface IOneSignalPushNotificationService
