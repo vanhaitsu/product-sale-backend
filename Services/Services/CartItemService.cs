@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.Identity.Client;
 using Repositories.Entities;
 using Repositories.Interfaces;
 using Repositories.Models.CartItemModels;
-using Repositories.Models.ProductModels;
 using Services.Common;
 using Services.Interfaces;
 using Services.Models.CartItemModels;
 using Services.Models.CartModels;
-using Services.Models.ProductModels;
 using Services.Models.ResponseModels;
 
 namespace Services.Services
@@ -63,6 +60,7 @@ namespace Services.Services
             await _unitOfWork.CartItemRepository.AddAsync(cartItem);
 
             cart.TotalPrice += product.Price * cartItem.Quantity;
+            _unitOfWork.CartRepository.Update(cart);
 
             int check = await _unitOfWork.SaveChangeAsync();
             return check > 0
