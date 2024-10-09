@@ -31,11 +31,12 @@ namespace Repositories.Entities
 		public DateTime? DeletionDate { get; set; }
 		public Guid? DeletedBy { get; set; }
 		public bool IsDeleted { get; set; } = false;
-		public Guid CartID { get; set; }
-		public ICollection<Cart> Cart { get; set; } = null!;
-        public ICollection<Order>? Orders { get; set; }
-        public ICollection<Notification>? Notifications { get; set; }
-        public ICollection<ChatMessage>? ChatMessages { get; set; }
-        public ICollection<FeedBack>? FeedBacks { get; set; }
+        public Guid CartID { get; set; }
+		public ICollection<Cart> Cart { get; set; } = new List<Cart>();
+        public ICollection<Order>? Orders { get; set; } = new List<Order>();
+        public ICollection<Notification>? Notifications { get; set; } = new List<Notification>();
+        public ICollection<ChatMessage>? ChatMessages { get; set; } = new List<ChatMessage>();
+        public ICollection<FeedBack>? FeedBacks { get; set; } = new List<FeedBack>();
+
     }
 }

@@ -321,9 +321,6 @@ namespace Repositories.Migrations
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -364,6 +361,9 @@ namespace Repositories.Migrations
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("OrderCartItemID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -376,6 +376,8 @@ namespace Repositories.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CartID");
+
+                    b.HasIndex("OrderCartItemID");
 
                     b.HasIndex("ProductID");
 
@@ -575,10 +577,9 @@ namespace Repositories.Migrations
 
                     b.Property<string>("BillingAddress")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CartItemID")
+                    b.Property<Guid?>("CartItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -615,9 +616,60 @@ namespace Repositories.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.HasIndex("CartItemID");
+                    b.HasIndex("CartItemId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("Repositories.Entities.OrderCartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("OrderCartItems");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -925,6 +977,12 @@ namespace Repositories.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Repositories.Entities.OrderCartItem", "OrderCartItem")
+                        .WithMany()
+                        .HasForeignKey("OrderCartItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Repositories.Entities.Product", "Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductID")
@@ -933,6 +991,8 @@ namespace Repositories.Migrations
                         .HasConstraintName("FK_CartItems_Products_ProductID");
 
                     b.Navigation("Cart");
+
+                    b.Navigation("OrderCartItem");
 
                     b.Navigation("Product");
                 });
@@ -983,18 +1043,33 @@ namespace Repositories.Migrations
                     b.HasOne("Repositories.Entities.Account", "Account")
                         .WithMany("Orders")
                         .HasForeignKey("AccountID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Repositories.Entities.CartItem", "CartItem")
+                    b.HasOne("Repositories.Entities.CartItem", null)
                         .WithMany("Orders")
-                        .HasForeignKey("CartItemID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CartItemId");
 
                     b.Navigation("Account");
+                });
 
-                    b.Navigation("CartItem");
+            modelBuilder.Entity("Repositories.Entities.OrderCartItem", b =>
+                {
+                    b.HasOne("Repositories.Entities.Order", "Order")
+                        .WithMany("OrderCartItems")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Repositories.Entities.Product", "Product")
+                        .WithMany("OrderCartItems")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -1073,6 +1148,8 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("Repositories.Entities.Order", b =>
                 {
+                    b.Navigation("OrderCartItems");
+
                     b.Navigation("Payment");
                 });
 
@@ -1081,6 +1158,8 @@ namespace Repositories.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("FeedBacks");
+
+                    b.Navigation("OrderCartItems");
 
                     b.Navigation("ProductImages");
                 });

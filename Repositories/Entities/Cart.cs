@@ -13,7 +13,6 @@ namespace Repositories.Entities
     {
         public Guid AccountID { get; set; }
         public decimal TotalPrice { get; set; }
-        public CartStatus Status { get; set; } = CartStatus.Active;
         public Account Account { get; set; } = null!;
         public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
