@@ -12,7 +12,6 @@ namespace Repositories.Entities
     {
         public Guid CartID { get; set; }
         public Guid ProductID { get; set; }
-        public Guid OrderCartItemID { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public Cart Cart { get; set; } = null!;
