@@ -74,6 +74,14 @@ namespace API
             services.AddScoped<IOneSignalPushNotificationService, OneSignalPushNotificationService>();
             services.AddHttpClient<OneSignalPushNotificationService>();
 
+            //Brand
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+
+            //Category
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
             return services;
         }
     }

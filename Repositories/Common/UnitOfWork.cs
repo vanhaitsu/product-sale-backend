@@ -11,13 +11,17 @@ namespace Repositories.Common
 		private readonly ICartItemRepository _cartItemRepository;
 		private readonly IPaymentRepository _paymentRepository;
 		private readonly IOrderRepository _orderRepository;
+        private readonly IBrandRepository _brandRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public UnitOfWork(AppDbContext dbContext, IAccountRepository accountRepository,
 			IProductRepository productRepository, 
 			ICartRepository cartRepository, 
 			ICartItemRepository cartItemRepository,
             IPaymentRepository paymentRepository,
-            IOrderRepository orderRepository)
+            IOrderRepository orderRepository,
+            IBrandRepository brandRepository,
+            ICategoryRepository categoryRepository)
 		{
 			_dbContext = dbContext;
 			_accountRepository = accountRepository;
@@ -26,6 +30,8 @@ namespace Repositories.Common
 			_cartItemRepository = cartItemRepository;
 			_paymentRepository = paymentRepository;
 			_orderRepository = orderRepository;
+			_brandRepository = brandRepository;
+			_categoryRepository = categoryRepository;
 		}
 
 		public AppDbContext DbContext => _dbContext;
@@ -35,6 +41,8 @@ namespace Repositories.Common
 		public ICartItemRepository CartItemRepository => _cartItemRepository;
 		public IPaymentRepository PaymentRepository => _paymentRepository;
 		public IOrderRepository OrderRepository => _orderRepository;
+        public IBrandRepository BrandRepository => _brandRepository;
+        public ICategoryRepository CategoryRepository => _categoryRepository;
 
         public async Task<int> SaveChangeAsync()
 		{
