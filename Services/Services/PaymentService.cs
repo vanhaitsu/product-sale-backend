@@ -26,7 +26,7 @@ namespace Services.Services
         public async Task<ResponseModel> VNPayMethod(OrderModel orderModel, HttpContext context)
         {
             var result = new ResponseModel();
-            var cart = await _unitOfWork.CartRepository.GetAsync(orderModel.AccountID, "Account, CartItems");
+            var cart = await _unitOfWork.CartRepository.GetByAccount(orderModel.AccountID);
             if (cart == null)
             {
                 return new ResponseModel { Message = "Cart cannot be found.", Status = false };
@@ -131,16 +131,16 @@ namespace Services.Services
                 AccountID = user.Id,
                 BillingAddress = orderModel.BillingAddress,
                 PaymentMethod = PaymentMethod.VNPay,
-                OrderCartItems = (ICollection<OrderCartItem>)orderModel.OrderCartItemModels.Select(_ => new OrderCartItem
+                OrderCartItems = orderModel.OrderCartItemModels.Select(_ => new OrderCartItem
                 {
                     ProductID = _.ProductID,
                     Quantity = _.Quantity,
                     Price = _.Price
-                }),
+                }).ToList(),
                 Payment = new Payment
                 {
                     Id = Guid.NewGuid(),
-                    Amount = cart.TotalPrice,
+                    Amount = orderModel.OrderCartItemModels.Sum(_ => _.Quantity * _.Price),
                 }
             };
         }
