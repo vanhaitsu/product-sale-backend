@@ -47,7 +47,7 @@ namespace Services.Services
                                 : x.OrderBy(i => i.CreationDate);
                     }
                 },
-                include: "Category,Brand,ProductImages,FeedBacks"
+                include: "Category,Brand,ProductImages,FeedBacks,ProductSizes"
             );
 
             if (productList != null)
