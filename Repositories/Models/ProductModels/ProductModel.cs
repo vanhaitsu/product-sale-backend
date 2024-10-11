@@ -1,6 +1,7 @@
 ﻿using Repositories.Entities;
 using Repositories.Models.FeedbackModels;
 using Repositories.Models.ProductImageModels;
+using Repositories.Models.SizeModels;
 
 namespace Repositories.Models.ProductModels
 {
@@ -16,5 +17,6 @@ namespace Repositories.Models.ProductModels
         public Guid BrandID { get; set; }
         public List<ProductImageModel>? ProductImages { get; set; }
         public List<FeedbackModel>? Feedbacks { get; set; }
+        public List<SizeModel>? SizeModels { get; set; }
     }
 }

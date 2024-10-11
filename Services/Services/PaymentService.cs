@@ -115,11 +115,11 @@ namespace Services.Services
                 var productId = productIds[i];
                 var quantity = quantities[i];
                 var product = cart.CartItems.Select(_ => _.Product).FirstOrDefault(_ => _.Id == productId);
-                var stockProduct = product.StockQuantity;
-                if (stockProduct < quantity)
-                {
-                    return false;
-                }
+                //var stockProduct = product.StockQuantity;
+                //if (stockProduct < quantity)
+                //{
+                //    return false;
+                //}
             }
             return true;
         }

@@ -6,6 +6,7 @@ using Repositories.Models.CategoryModels;
 using Repositories.Models.FeedbackModels;
 using Repositories.Models.ProductImageModels;
 using Repositories.Models.ProductModels;
+using Repositories.Models.SizeModels;
 using Services.Models.AccountModels;
 using Services.Models.CartModels;
 using Services.Models.CommonModels;
@@ -33,6 +34,9 @@ namespace Services.Common
 
             //CartItem
             CreateMap<CartItemCreateModel, CartItem>();
+
+            //Size
+            CreateMap<Size, SizeModel>();
 
             //Brand
             CreateMap<Brand, BrandModel>().ReverseMap();
