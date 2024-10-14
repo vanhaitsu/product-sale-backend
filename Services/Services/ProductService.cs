@@ -2,6 +2,8 @@
 using Repositories.Entities;
 using Repositories.Interfaces;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ProductSizeModels;
+using Repositories.Models.SizeModels;
 using Services.Common;
 using Services.Interfaces;
 using Services.Models.ProductModels;
@@ -65,7 +67,7 @@ namespace Services.Services
 
         public async Task<ResponseDataModel<ProductModel>> Get(Guid id)
         {
-            var product = await _unitOfWork.ProductRepository.Get(id);
+            var product = await _unitOfWork.ProductRepository.GetAsync(id, "Category,Brand,ProductImages,FeedBacks,ProductSizes");
 
             if (product == null)
             {
