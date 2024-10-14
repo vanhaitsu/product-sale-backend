@@ -17,6 +17,6 @@ namespace Repositories.Models.ProductModels
         public Guid BrandID { get; set; }
         public List<ProductImageModel>? ProductImages { get; set; }
         public List<FeedbackModel>? Feedbacks { get; set; }
-        public List<SizeModel>? SizeModels { get; set; }
+        public List<SizeModel>? ProductSizes { get; set; }
     }
 }
