@@ -1,11 +1,8 @@
 ﻿using Repositories.Entities;
-using Repositories.Models.FeedbackModels;
-using Repositories.Models.ProductImageModels;
-using Repositories.Models.SizeModels;
 
-namespace Repositories.Models.ProductModels
+namespace Services.Models.ProductModels
 {
-    public class ProductModel
+    public class ProductImportModel
     {
         public Guid Id { get; set; }
         public string ProductName { get; set; } = null!;
@@ -15,8 +12,6 @@ namespace Repositories.Models.ProductModels
         public decimal Price { get; set; }
         public Guid CategoryID { get; set; }
         public Guid BrandID { get; set; }
-        public List<ProductImageModel>? ProductImages { get; set; }
-        public List<FeedbackModel>? Feedbacks { get; set; }
-        public List<SizeModel>? SizeModels { get; set; }
+        public List<Guid> ProductImagesId { get; set; }
     }
 }

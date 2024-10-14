@@ -6,9 +6,11 @@ using Repositories.Models.CategoryModels;
 using Repositories.Models.FeedbackModels;
 using Repositories.Models.ProductImageModels;
 using Repositories.Models.ProductModels;
+using Repositories.Models.SizeModels;
 using Services.Models.AccountModels;
 using Services.Models.CartModels;
 using Services.Models.CommonModels;
+using Services.Models.ProductModels;
 
 namespace Services.Common
 {
@@ -24,8 +26,9 @@ namespace Services.Common
             //Product
             CreateMap<ProductModel, Product>().ReverseMap();
             CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<ProductImportModel, Product>().ReverseMap();
 
-			//ProductImage
+            //ProductImage
             CreateMap<ProductImage, ProductImageModel>();
 
 			//Feedback
@@ -33,6 +36,9 @@ namespace Services.Common
 
             //CartItem
             CreateMap<CartItemCreateModel, CartItem>();
+
+            //Size
+            CreateMap<Size, SizeModel>();
 
             //Brand
             CreateMap<Brand, BrandModel>().ReverseMap();

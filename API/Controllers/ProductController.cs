@@ -56,5 +56,27 @@ namespace API.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpPost()]
+        public async Task<IActionResult> CreateProducts([FromBody] List<ProductImportModel> products)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return ValidationProblem(ModelState);
+                }
+                var result = await _productService.AddRangeProduct(products);
+                if (result.Status)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

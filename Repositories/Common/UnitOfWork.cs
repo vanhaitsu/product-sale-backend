@@ -13,6 +13,7 @@ namespace Repositories.Common
 		private readonly IOrderRepository _orderRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ISizeRepository _sizeRepository;
 
         public UnitOfWork(AppDbContext dbContext, IAccountRepository accountRepository,
 			IProductRepository productRepository, 
@@ -21,7 +22,8 @@ namespace Repositories.Common
             IPaymentRepository paymentRepository,
             IOrderRepository orderRepository,
             IBrandRepository brandRepository,
-            ICategoryRepository categoryRepository)
+            ICategoryRepository categoryRepository,
+			ISizeRepository sizeRepository)
 		{
 			_dbContext = dbContext;
 			_accountRepository = accountRepository;
@@ -32,6 +34,7 @@ namespace Repositories.Common
 			_orderRepository = orderRepository;
 			_brandRepository = brandRepository;
 			_categoryRepository = categoryRepository;
+			_sizeRepository = sizeRepository;
 		}
 
 		public AppDbContext DbContext => _dbContext;
@@ -43,6 +46,7 @@ namespace Repositories.Common
 		public IOrderRepository OrderRepository => _orderRepository;
         public IBrandRepository BrandRepository => _brandRepository;
         public ICategoryRepository CategoryRepository => _categoryRepository;
+        public ISizeRepository SizeRepository => _sizeRepository;
 
         public async Task<int> SaveChangeAsync()
 		{
