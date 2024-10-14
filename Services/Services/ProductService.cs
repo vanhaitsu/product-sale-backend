@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Repositories.Entities;
 using Repositories.Interfaces;
 using Repositories.Models.ProductModels;
 using Services.Common;
@@ -82,6 +83,28 @@ namespace Services.Services
                 Status = true,
                 Message = "Get Product successfully",
                 Data = productModel
+            };
+        }
+
+        public async Task<ResponseModel> AddRangeProduct(List<ProductImportModel> products)
+        {
+            var productList = _mapper.Map<List<Product>>(products);
+            if (productList == null || !productList.Any())
+            {
+                return new ResponseModel()
+                {
+                    Status = false,
+                    Message = "Cannot create product!"
+                };
+            }
+
+            await _unitOfWork.ProductRepository.AddRangeAsync(productList);
+            await _unitOfWork.SaveChangeAsync();
+
+            return new ResponseModel()
+            {
+                Status = true,
+                Message = "Products are imported successfully"
             };
         }
     }
