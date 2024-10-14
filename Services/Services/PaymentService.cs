@@ -36,14 +36,14 @@ namespace Services.Services
                 return new ResponseModel { Message = "Must have at least one product to checkout.", Status = false };
             }
             var checkInformation = await CheckInformation(orderModel.AccountID, 
-                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductID).ToList(),
+                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductSizeID).ToList(),
                                                           orderModel.OrderCartItemModels.Select(_ => _.Quantity).ToList());
             if(checkInformation == false)
             {
                 return new ResponseModel { Message = "Incorrect data.", Status = false };
             }
             var checkStockProduct = await CheckStockQuantity(orderModel.AccountID,
-                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductID).ToList(),
+                                                          orderModel.OrderCartItemModels.Select(_ => _.ProductSizeID).ToList(),
                                                           orderModel.OrderCartItemModels.Select(_ => _.Quantity).ToList());
             if (checkInformation == false)
             {
@@ -94,7 +94,7 @@ namespace Services.Services
                 var productId = productIds[i];
                 var quantity = quantities[i];
                
-                var cartItem = cart.CartItems.FirstOrDefault(_ => _.ProductID == productId);
+                var cartItem = cart.CartItems.FirstOrDefault(_ => _.ProductSize.ProductID == productId);
                 if (cartItem == null || cartItem.Quantity != quantity)
                 {
                     return false;
@@ -107,19 +107,19 @@ namespace Services.Services
             return true;
 
         }
-        public async Task<bool> CheckStockQuantity( Guid userId, List<Guid> productIds, List<int> quantities)
+        public async Task<bool> CheckStockQuantity(Guid userId, List<Guid> productSizeIds, List<int> quantities)
         {
             var cart = await _unitOfWork.CartRepository.GetByAccount(userId);
-            for (int i = 0; i < productIds.Count; i++)
+            for (int i = 0; i < productSizeIds.Count; i++)
             {
-                var productId = productIds[i];
+                var productSizeId = productSizeIds[i];
                 var quantity = quantities[i];
-                var product = cart.CartItems.Select(_ => _.Product).FirstOrDefault(_ => _.Id == productId);
-                //var stockProduct = product.StockQuantity;
-                //if (stockProduct < quantity)
-                //{
-                //    return false;
-                //}
+                var product = cart.CartItems.Select(_ => _.ProductSize).FirstOrDefault(_ => _.Id == productSizeId);
+                var stockProduct = product.StockQuantity;
+                if (stockProduct < quantity)
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -133,7 +133,7 @@ namespace Services.Services
                 PaymentMethod = PaymentMethod.VNPay,
                 OrderCartItems = orderModel.OrderCartItemModels.Select(_ => new OrderCartItem
                 {
-                    ProductID = _.ProductID,
+                    ProductSizeID = _.ProductSizeID,
                     Quantity = _.Quantity,
                     Price = _.Price
                 }).ToList(),

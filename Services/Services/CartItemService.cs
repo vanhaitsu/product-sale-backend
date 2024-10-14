@@ -89,7 +89,7 @@ namespace Services.Services
             var cartId = cart.Id;
             var cartItemsResult = await _unitOfWork.CartItemRepository.GetAllAsync(
                 filter: _ => _.CartID == cartId,
-                include: "Product, Cart", 
+                include: "ProductSize, Cart, Product", 
                 pageIndex: cartItemFilterModel.PageIndex,
                 pageSize: cartItemFilterModel.PageSize
             );
@@ -100,9 +100,10 @@ namespace Services.Services
                 {
                     Id = _.Id,
                     CartID = _.CartID,
-                    ProductID = _.ProductID,
-                    ProductName = _.Product.ProductName,
-                    ImageUrl = _.Product.ProductImages.FirstOrDefault()?.ImgUrl ?? string.Empty, 
+                    ProductID = _.ProductSize.ProductID,
+                    ProductSizeID = _.ProductSizeID,
+                    ProductName = _.ProductSize.Product.ProductName,
+                    ImageUrl = _.ProductSize.Product.ProductImages.FirstOrDefault()?.ImgUrl ?? string.Empty, 
                     PricePerItem = _.Price,
                     Quantity = _.Quantity,
                     TotalPrice = _.Price * _.Quantity,
@@ -155,6 +156,11 @@ namespace Services.Services
             if (cartItem == null )
             {
                 return new ResponseModel { Message = "Cart item not found.", Status = false };
+            }
+            var stockQuantity = cartItem.ProductSize.StockQuantity;
+            if (stockQuantity < quantity)
+            {
+                return new ResponseModel { Message = $"The number of products has exceeded the allowable limit, the quantity of goods left is only {stockQuantity}", Status = false };
             }
             cartItem.Quantity = quantity;
             var cart = await _unitOfWork.CartRepository.GetById(cartItem.CartID);
