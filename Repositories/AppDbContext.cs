@@ -24,6 +24,8 @@ namespace Repositories
         public DbSet<ProductImage> ProductImages { get; set; } = null!;
         public DbSet<Brand> Brands { get; set; } = null!;
         public DbSet<FeedBack> FeedBacks { get; set; } = null!;
+        public DbSet<Size> Sizes { get; set; } = null!;
+        public DbSet<ProductSize> ProductSizes { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -96,6 +98,9 @@ namespace Repositories
                       .HasForeignKey(ci => ci.ProductID)
                       .OnDelete(DeleteBehavior.Restrict)
                       .HasConstraintName("FK_CartItems_Products_ProductID");
+
+                entity.Property(x => x.Price)
+                      .HasColumnType("decimal(18,2)");
             });
             // OrderCartItem
             modelBuilder.Entity<OrderCartItem>(entity =>
@@ -107,6 +112,9 @@ namespace Repositories
                 entity.HasOne(ci => ci.Product)
                       .WithMany(p => p.OrderCartItems)
                       .HasForeignKey(ci => ci.ProductID);
+
+                entity.Property(x => x.Price)
+                      .HasColumnType("decimal(18,2)");
             });
             // Order entity configuration
             modelBuilder.Entity<Order>(entity =>
@@ -157,6 +165,12 @@ namespace Repositories
                 entity.Property(x => x.Address).IsRequired().HasMaxLength(256);
                 entity.Property(x => x.Latitude).HasPrecision(9, 6);
                 entity.Property(x => x.Longitude).HasPrecision(9, 6);
+            });
+
+            // Cart entity configuration
+            modelBuilder.Entity<Size>(entity =>
+            {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
         }
     }

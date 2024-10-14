@@ -46,6 +46,16 @@ namespace Services.Services
                 };
             }
 
+            var size = await _unitOfWork.SizeRepository.GetAsync(cartItemCreateModel.SizeId);
+            if (size == null)
+            {
+                return new ResponseModel()
+                {
+                    Message = "Size not found",
+                    Status = false
+                };
+            }
+
             var cart = await _unitOfWork.CartRepository.GetByAccount(account.Id);
             if (cart == null)
             {

@@ -4,6 +4,7 @@
     {
         public Guid AccountID { get; set; }
         public Guid ProductID { get; set; }
+        public Guid SizeId { get; set; }
         public int Quantity { get; set; }
     }
 }

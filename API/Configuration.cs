@@ -82,6 +82,10 @@ namespace API
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            //Size
+            services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<ISizeRepository, SizeRepository>();
+
             return services;
         }
     }

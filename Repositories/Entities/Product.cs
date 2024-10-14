@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Entities
 {
@@ -14,7 +9,6 @@ namespace Repositories.Entities
         public string BriefDescription { get; set; } = null!;
         public  string FullDescription { get; set; } = null!;
         public string TechnicalSpecifications { get; set; } = null!;
-        public int StockQuantity { get; set; } 
         public decimal Price { get; set; }
         /*public string ImageURL { get; set; } = null!;*/
         public Guid CategoryID { get; set; }
@@ -25,5 +19,6 @@ namespace Repositories.Entities
         public ICollection<OrderCartItem> OrderCartItems { get; set; } = new List<OrderCartItem>();
         public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public ICollection<FeedBack> FeedBacks { get; set; } = new List<FeedBack>();
+        public ICollection<ProductSize> ProductSizes { get; set; } = new List<ProductSize>();
     }
 }

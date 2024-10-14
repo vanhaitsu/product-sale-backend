@@ -11,6 +11,7 @@
 		IPaymentRepository PaymentRepository { get; }
         IBrandRepository BrandRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+		ISizeRepository SizeRepository { get; }
         public Task<int> SaveChangeAsync();
 	}
 }

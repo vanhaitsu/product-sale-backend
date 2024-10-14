@@ -1,5 +1,4 @@
-﻿
-using Repositories.Models.ProductModels;
+﻿using Repositories.Models.ProductModels;
 using Services.Common;
 using Services.Models.ProductModels;
 using Services.Models.ResponseModels;
@@ -10,5 +9,6 @@ namespace Services.Interfaces
     {
         Task<Pagination<ProductModel>> GetAll(ProductFilterModel productFilterModel);
         Task<ResponseDataModel<ProductModel>> Get(Guid id);
+        Task<ResponseModel> AddRangeProduct(List<ProductImportModel> products);
     }
 }
