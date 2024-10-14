@@ -10,6 +10,7 @@ using Repositories.Models.SizeModels;
 using Services.Models.AccountModels;
 using Services.Models.CartModels;
 using Services.Models.CommonModels;
+using Services.Models.ProductModels;
 
 namespace Services.Common
 {
@@ -25,8 +26,9 @@ namespace Services.Common
             //Product
             CreateMap<ProductModel, Product>().ReverseMap();
             CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<ProductImportModel, Product>().ReverseMap();
 
-			//ProductImage
+            //ProductImage
             CreateMap<ProductImage, ProductImageModel>();
 
 			//Feedback
