@@ -42,7 +42,9 @@ namespace Services.Common
             CreateMap<Size, SizeModel>();
 
             //ProductSize
-            CreateMap<ProductSize, ProductSizeModel>().ReverseMap();
+            CreateMap<ProductSize, ProductSizeModel>()
+                .ForMember(dest => dest.SizeName, opt => opt.MapFrom(src => src.Size.Name))
+                .ReverseMap();
 
             //Brand
             CreateMap<Brand, BrandModel>().ReverseMap();

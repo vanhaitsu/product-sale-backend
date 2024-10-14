@@ -67,7 +67,7 @@ namespace Services.Services
 
         public async Task<ResponseDataModel<ProductModel>> Get(Guid id)
         {
-            var product = await _unitOfWork.ProductRepository.GetAsync(id, "Category,Brand,ProductImages,FeedBacks,ProductSizes");
+            var product = await _unitOfWork.ProductRepository.GetAsync(id, "Category,Brand,ProductImages,FeedBacks,ProductSizes,ProductSizes.Size");
 
             if (product == null)
             {
