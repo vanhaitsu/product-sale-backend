@@ -26,7 +26,10 @@ namespace Services.Common
 
             //Product
             CreateMap<ProductModel, Product>().ReverseMap();
-            CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<Product, ProductModel>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.BrandName))
+                .ReverseMap();
             CreateMap<ProductImportModel, Product>().ReverseMap();
 
             //ProductImage
