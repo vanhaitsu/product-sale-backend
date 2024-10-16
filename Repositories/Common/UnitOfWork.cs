@@ -7,6 +7,7 @@ namespace Repositories.Common
 		private readonly AppDbContext _dbContext;
 		private readonly IAccountRepository _accountRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IProductSizeRepository _productSizeRepository;
         private readonly ICartRepository _cartRepository;
 		private readonly ICartItemRepository _cartItemRepository;
 		private readonly IPaymentRepository _paymentRepository;
@@ -23,7 +24,9 @@ namespace Repositories.Common
             IOrderRepository orderRepository,
             IBrandRepository brandRepository,
             ICategoryRepository categoryRepository,
-			ISizeRepository sizeRepository)
+			ISizeRepository sizeRepository,
+			IProductSizeRepository productSizeRepository)
+			
 		{
 			_dbContext = dbContext;
 			_accountRepository = accountRepository;
@@ -35,12 +38,15 @@ namespace Repositories.Common
 			_brandRepository = brandRepository;
 			_categoryRepository = categoryRepository;
 			_sizeRepository = sizeRepository;
+			_productSizeRepository = productSizeRepository;
 		}
 
 		public AppDbContext DbContext => _dbContext;
 		public IAccountRepository AccountRepository => _accountRepository;
         public IProductRepository ProductRepository => _productRepository;
-		public ICartRepository CartRepository => _cartRepository;
+        public IProductSizeRepository ProductSizeRepository => _productSizeRepository;
+
+        public ICartRepository CartRepository => _cartRepository;
 		public ICartItemRepository CartItemRepository => _cartItemRepository;
 		public IPaymentRepository PaymentRepository => _paymentRepository;
 		public IOrderRepository OrderRepository => _orderRepository;

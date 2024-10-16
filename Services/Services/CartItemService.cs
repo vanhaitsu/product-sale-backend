@@ -35,7 +35,6 @@ namespace Services.Services
                     Status = false
                 };
             }
-
             var product = await _unitOfWork.ProductRepository.GetAsync(cartItemCreateModel.ProductID);
             if (product == null)
             {
@@ -45,7 +44,6 @@ namespace Services.Services
                     Status = false
                 };
             }
-
             var size = await _unitOfWork.SizeRepository.GetAsync(cartItemCreateModel.SizeId);
             if (size == null)
             {
@@ -55,7 +53,23 @@ namespace Services.Services
                     Status = false
                 };
             }
-
+            var checkProductInProductSize = await _unitOfWork.ProductSizeRepository.GetByProductAndSize(cartItemCreateModel.ProductID, cartItemCreateModel.SizeId);
+            if (checkProductInProductSize == null)
+            {
+                return new ResponseModel()
+                {
+                    Message = "Product do not have this size",
+                    Status = false
+                };
+            }
+            if(checkProductInProductSize.StockQuantity < cartItemCreateModel.Quantity)
+            {
+                return new ResponseModel()
+                {
+                    Message = "Product do not have enough quantity this size",
+                    Status = false
+                };
+            }
             var cart = await _unitOfWork.CartRepository.GetByAccount(account.Id);
             if (cart == null)
             {
@@ -63,10 +77,15 @@ namespace Services.Services
                 cart = response.Data;
             }
 
-            CartItem cartItem = _mapper.Map<CartItem>(cartItemCreateModel);
-            cartItem.CartID = cart.Id;
-            cartItem.Price = product.Price;
+            CartItem cartItem = new CartItem
+            {
+                Id = Guid.NewGuid(),
+                CartID = cart.Id,
+                ProductSizeID = checkProductInProductSize.Id,
+                Quantity = cartItemCreateModel.Quantity,
+                Price = product.Price,
 
+            };
             await _unitOfWork.CartItemRepository.AddAsync(cartItem);
 
             cart.TotalPrice += product.Price * cartItem.Quantity;
@@ -89,7 +108,7 @@ namespace Services.Services
             var cartId = cart.Id;
             var cartItemsResult = await _unitOfWork.CartItemRepository.GetAllAsync(
                 filter: _ => _.CartID == cartId,
-                include: "ProductSize, Cart, Product", 
+                include: "ProductSize.Product, Cart", 
                 pageIndex: cartItemFilterModel.PageIndex,
                 pageSize: cartItemFilterModel.PageSize
             );
