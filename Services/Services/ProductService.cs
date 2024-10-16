@@ -50,7 +50,7 @@ namespace Services.Services
                                 : x.OrderBy(i => i.CreationDate);
                     }
                 },
-                include: "Category,Brand,ProductImages,FeedBacks,ProductSizes"
+                include: "Category,Brand,ProductImages,FeedBacks,ProductSizes.Size"
             );
 
             if (productList != null)
