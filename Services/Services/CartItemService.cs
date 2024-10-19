@@ -102,7 +102,10 @@ namespace Services.Services
 
             if (cart == null)
             {
-                return null; 
+                return new Pagination<CartItemModel>(
+                           new List<CartItemModel>(), 
+                           cartItemFilterModel.PageIndex, 
+                           cartItemFilterModel.PageSize, 0);
             }
 
             var cartId = cart.Id;
@@ -113,7 +116,7 @@ namespace Services.Services
                 pageSize: cartItemFilterModel.PageSize
             );
 
-            if (cartItemsResult != null)
+            if (cartItemsResult != null || cartItemsResult.Data.Any())
             {
                 var cartItemModelList = cartItemsResult.Data.Select(_ => new CartItemModel
                 {

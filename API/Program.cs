@@ -45,7 +45,7 @@ builder.Services.AddSwaggerGen(x =>
 // Local Database
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DeployDB"));
 });
 
 // Deploy Database
