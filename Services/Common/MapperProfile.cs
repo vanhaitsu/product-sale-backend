@@ -6,6 +6,7 @@ using Repositories.Models.CategoryModels;
 using Repositories.Models.FeedbackModels;
 using Repositories.Models.ProductImageModels;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ProductSizeModels;
 using Repositories.Models.SizeModels;
 using Services.Models.AccountModels;
 using Services.Models.CartModels;
@@ -25,7 +26,10 @@ namespace Services.Common
 
             //Product
             CreateMap<ProductModel, Product>().ReverseMap();
-            CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<Product, ProductModel>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.BrandName))
+                .ReverseMap();
             CreateMap<ProductImportModel, Product>().ReverseMap();
 
             //ProductImage
@@ -39,6 +43,11 @@ namespace Services.Common
 
             //Size
             CreateMap<Size, SizeModel>();
+
+            //ProductSize
+            CreateMap<ProductSize, ProductSizeModel>()
+                .ForMember(dest => dest.SizeName, opt => opt.MapFrom(src => src.Size.Name))
+                .ReverseMap();
 
             //Brand
             CreateMap<Brand, BrandModel>().ReverseMap();

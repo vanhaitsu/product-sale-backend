@@ -55,11 +55,7 @@ namespace Repositories
                 entity.Property(x => x.FullDescription).HasMaxLength(1000);
                 entity.Property(x => x.Price).HasColumnType("decimal(18,2)");
 
-                entity.HasMany(x => x.CartItems)
-                      .WithOne(ci => ci.Product)
-                      .HasForeignKey(ci => ci.ProductID)
-                      .OnDelete(DeleteBehavior.Restrict)
-                      .HasConstraintName("FK_CartItems_Products_ProductID");
+              
             });
 
             modelBuilder.Entity<Brand>().Property(e => e.Id).HasDefaultValueSql("NEWID()");
@@ -93,11 +89,11 @@ namespace Repositories
                       .HasForeignKey(ci => ci.CartID)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(ci => ci.Product)
+                entity.HasOne(ci => ci.ProductSize)
                       .WithMany(p => p.CartItems)
-                      .HasForeignKey(ci => ci.ProductID)
+                      .HasForeignKey(ci => ci.ProductSizeID)
                       .OnDelete(DeleteBehavior.Restrict)
-                      .HasConstraintName("FK_CartItems_Products_ProductID");
+                      .HasConstraintName("FK_CartItems_ProductSizes_ProductSizeID");
 
                 entity.Property(x => x.Price)
                       .HasColumnType("decimal(18,2)");
@@ -109,9 +105,9 @@ namespace Repositories
                 entity.HasOne(oci => oci.Order)
                       .WithMany(oc => oc.OrderCartItems)
                       .HasForeignKey(oci => oci.OrderID);
-                entity.HasOne(ci => ci.Product)
+                entity.HasOne(ci => ci.ProductSize)
                       .WithMany(p => p.OrderCartItems)
-                      .HasForeignKey(ci => ci.ProductID);
+                      .HasForeignKey(ci => ci.ProductSizeID);
 
                 entity.Property(x => x.Price)
                       .HasColumnType("decimal(18,2)");

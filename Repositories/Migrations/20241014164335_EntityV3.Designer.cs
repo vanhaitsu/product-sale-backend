@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,11 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241014164335_EntityV3")]
+    partial class EntityV3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -657,7 +660,7 @@ namespace Repositories.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("ProductSizeID")
+                    b.Property<Guid>("ProductID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -667,7 +670,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.HasIndex("ProductSizeID");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("OrderCartItems");
                 });
@@ -1133,15 +1136,15 @@ namespace Repositories.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Repositories.Entities.ProductSize", "ProductSize")
+                    b.HasOne("Repositories.Entities.Product", "Product")
                         .WithMany("OrderCartItems")
-                        .HasForeignKey("ProductSizeID")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
 
-                    b.Navigation("ProductSize");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Payment", b =>
@@ -1248,6 +1251,8 @@ namespace Repositories.Migrations
                 {
                     b.Navigation("FeedBacks");
 
+                    b.Navigation("OrderCartItems");
+
                     b.Navigation("ProductImages");
 
                     b.Navigation("ProductSizes");
@@ -1256,8 +1261,6 @@ namespace Repositories.Migrations
             modelBuilder.Entity("Repositories.Entities.ProductSize", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("OrderCartItems");
                 });
 
             modelBuilder.Entity("Repositories.Entities.Size", b =>

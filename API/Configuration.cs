@@ -86,6 +86,9 @@ namespace API
             services.AddScoped<ISizeService, SizeService>();
             services.AddScoped<ISizeRepository, SizeRepository>();
 
+            //ProductSize
+            services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
+
             return services;
         }
     }

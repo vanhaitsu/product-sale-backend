@@ -18,7 +18,10 @@ namespace Repositories.Repositories
             return await _dbContext.Carts
                                    .Include(_ => _.Account)
                                    .Include(_ => _.CartItems)
-                                   .ThenInclude(_ => _.Product)
+                                   .ThenInclude(_ => _.ProductSize)
+                                   .ThenInclude(_ => _.Size)
+                                   .Include(_ => _.CartItems)
+                                   .ThenInclude(_ => _.ProductSize.Product)
                                    .FirstOrDefaultAsync(_ => _.AccountID == accountId);
         }
         public async Task<Cart> GetById(Guid cartId)
@@ -26,7 +29,10 @@ namespace Repositories.Repositories
             return await _dbContext.Carts
                                    .Include(_ => _.Account)
                                    .Include(_ => _.CartItems)
-                                   .ThenInclude(_ => _.Product)
+                                   .ThenInclude(_ => _.ProductSize)
+                                   .ThenInclude(_ => _.Size)
+                                   .Include(_ => _.CartItems)
+                                   .ThenInclude(_ => _.ProductSize.Product)
                                    .FirstOrDefaultAsync(_ => _.Id == cartId);
         }
     }

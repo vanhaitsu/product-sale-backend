@@ -27,6 +27,10 @@ namespace API.Controllers
                     result.CurrentPage,
                     result.TotalPages,
                 };
+                if(result.TotalPages ==  0)
+                {
+                    return NotFound(result);
+                }
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 

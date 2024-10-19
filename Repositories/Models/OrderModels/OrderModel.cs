@@ -16,7 +16,7 @@ namespace Repositories.Models.OrderModels
     }
     public class OrderCartItemModel
     {
-        public Guid ProductID { get; set; }
+        public Guid ProductSizeID { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
     }
