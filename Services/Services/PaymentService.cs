@@ -135,12 +135,12 @@ namespace Services.Services
                 {
                     ProductSizeID = _.ProductSizeID,
                     Quantity = _.Quantity,
-                    Price = _.Price
+                    Price = _.PricePerItem
                 }).ToList(),
                 Payment = new Payment
                 {
                     Id = Guid.NewGuid(),
-                    Amount = orderModel.OrderCartItemModels.Sum(_ => _.Quantity * _.Price),
+                    Amount = orderModel.OrderCartItemModels.Sum(_ => _.Quantity * _.PricePerItem),
                 }
             };
         }
