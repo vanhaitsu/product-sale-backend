@@ -79,22 +79,22 @@ namespace Services.Services
             };
 
         }
-        public async Task<bool> CheckInformation(Guid userId, List<Guid> productIds, List<int> quantities)
+        public async Task<bool> CheckInformation(Guid userId, List<Guid> productSizeIds, List<int> quantities)
         {
             var cart = await _unitOfWork.CartRepository.GetByAccount(userId);
 
-            if (cart == null || cart.CartItems.Count == 0 || productIds.Count != quantities.Count)
+            if (cart == null || cart.CartItems.Count == 0 || productSizeIds.Count != quantities.Count)
             {
                 return false;
               
 
             }
-            for (int i = 0; i < productIds.Count; i++)
+            for (int i = 0; i < productSizeIds.Count; i++)
             {
-                var productId = productIds[i];
+                var productSizeId = productSizeIds[i];
                 var quantity = quantities[i];
                
-                var cartItem = cart.CartItems.FirstOrDefault(_ => _.ProductSize.ProductID == productId);
+                var cartItem = cart.CartItems.FirstOrDefault(_ => _.ProductSizeID == productSizeId);
                 if (cartItem == null || cartItem.Quantity != quantity)
                 {
                     return false;
@@ -135,12 +135,12 @@ namespace Services.Services
                 {
                     ProductSizeID = _.ProductSizeID,
                     Quantity = _.Quantity,
-                    Price = _.Price
+                    Price = _.PricePerItem
                 }).ToList(),
                 Payment = new Payment
                 {
                     Id = Guid.NewGuid(),
-                    Amount = orderModel.OrderCartItemModels.Sum(_ => _.Quantity * _.Price),
+                    Amount = orderModel.OrderCartItemModels.Sum(_ => _.Quantity * _.PricePerItem),
                 }
             };
         }
