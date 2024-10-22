@@ -43,6 +43,7 @@ namespace Repositories
             // Role entity configuration
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
                 entity.Property(x => x.Description).HasMaxLength(256);
             });
 
@@ -70,6 +71,7 @@ namespace Repositories
             // Cart entity configuration
             modelBuilder.Entity<Cart>(entity =>
             {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
                 entity.Property(x => x.TotalPrice)
                       .HasColumnType("decimal(18,2)");
 
@@ -97,6 +99,8 @@ namespace Repositories
 
                 entity.Property(x => x.Price)
                       .HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
             // OrderCartItem
             modelBuilder.Entity<OrderCartItem>(entity =>
@@ -111,6 +115,8 @@ namespace Repositories
 
                 entity.Property(x => x.Price)
                       .HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
             // Order entity configuration
             modelBuilder.Entity<Order>(entity =>
@@ -121,6 +127,8 @@ namespace Repositories
                 entity.HasOne(o => o.Account)
                       .WithMany(a => a.Orders)
                       .HasForeignKey(o => o.AccountID);
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
           
 
@@ -139,6 +147,8 @@ namespace Repositories
                 entity.HasOne(x => x.Account)
                       .WithMany(a => a.Notifications)
                       .HasForeignKey(x => x.AccountID);
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
 
             // ChatMessage entity configuration
@@ -149,6 +159,8 @@ namespace Repositories
                 entity.HasOne(x => x.Account)
                       .WithMany(a => a.ChatMessages)
                       .HasForeignKey(x => x.AccountID);
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
 
             // StoreLocation entity configuration
@@ -157,10 +169,21 @@ namespace Repositories
                 entity.Property(x => x.Address).IsRequired().HasMaxLength(256);
                 entity.Property(x => x.Latitude).HasPrecision(9, 6);
                 entity.Property(x => x.Longitude).HasPrecision(9, 6);
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
 
             // Cart entity configuration
             modelBuilder.Entity<Size>(entity =>
+            {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+            });
+
+            modelBuilder.Entity<ProductImage>(entity =>
+            {
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+            });
+
+            modelBuilder.Entity<ProductSize>(entity =>
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
             });
