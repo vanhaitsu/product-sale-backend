@@ -129,10 +129,6 @@ namespace Repositories
             {
                 entity.Property(x => x.Amount).HasColumnType("decimal(18,2)");
 
-                entity.HasOne(x => x.Order)
-                      .WithOne(o => o.Payment)
-                      .HasForeignKey<Payment>(x => x.OrderID)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Notification entity configuration
