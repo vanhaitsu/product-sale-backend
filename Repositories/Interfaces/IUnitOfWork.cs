@@ -13,6 +13,7 @@
         IBrandRepository BrandRepository { get; }
         ICategoryRepository CategoryRepository { get; }
 		ISizeRepository SizeRepository { get; }
+		IFeedBackRepository FeedBackRepository { get; }
         public Task<int> SaveChangeAsync();
 	}
 }

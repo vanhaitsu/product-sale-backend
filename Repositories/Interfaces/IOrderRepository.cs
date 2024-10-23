@@ -9,5 +9,6 @@ namespace Repositories.Interfaces
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
+        Task<bool> CheckBuyProductAlready(Guid accountId, Guid productId);
     }
 }
