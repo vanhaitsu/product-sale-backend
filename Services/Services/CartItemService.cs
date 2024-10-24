@@ -111,7 +111,7 @@ namespace Services.Services
             var cartId = cart.Id;
             var cartItemsResult = await _unitOfWork.CartItemRepository.GetAllAsync(
                 filter: _ => _.CartID == cartId,
-                include: "ProductSize.Product, ProductSize.Size, Cart", 
+                include: "ProductSize.Product.ProductImages, ProductSize.Size, Cart", 
                 pageIndex: cartItemFilterModel.PageIndex,
                 pageSize: cartItemFilterModel.PageSize
             );

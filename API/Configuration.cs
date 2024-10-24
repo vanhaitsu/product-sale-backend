@@ -89,6 +89,10 @@ namespace API
             //ProductSize
             services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
 
+            //FeedBack
+            services.AddScoped<IFeedBackRepository, FeedBackRepository>();
+            services.AddScoped<IFeedBackService, FeedBackService>();
+
             return services;
         }
     }

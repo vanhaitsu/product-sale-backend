@@ -18,5 +18,15 @@ namespace Repositories.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<bool> CheckBuyProductAlready(Guid accountId, Guid productId)
+        {
+            var checkBuy = await _dbContext.OrderCartItems
+                                           .Include(_ => _.ProductSize)
+                                           .Include(_ => _.Order.Payment)
+                                           .Where(_ => _.ProductSize.ProductID == productId && _.Order.AccountID == accountId && _.OrderStatus == Enums.OrderStatus.Shipped && _.Order.Payment.PaymentStatus == Enums.PaymentStatus.Completed)
+                                           .FirstOrDefaultAsync();
+
+            return checkBuy != null;
+        }
     }
 }

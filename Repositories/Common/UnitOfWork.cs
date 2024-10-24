@@ -15,6 +15,7 @@ namespace Repositories.Common
         private readonly IBrandRepository _brandRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ISizeRepository _sizeRepository;
+        private readonly IFeedBackRepository _feedBackRepository;
 
         public UnitOfWork(AppDbContext dbContext, IAccountRepository accountRepository,
 			IProductRepository productRepository, 
@@ -25,7 +26,8 @@ namespace Repositories.Common
             IBrandRepository brandRepository,
             ICategoryRepository categoryRepository,
 			ISizeRepository sizeRepository,
-			IProductSizeRepository productSizeRepository)
+			IProductSizeRepository productSizeRepository,
+			IFeedBackRepository feedBackRepository)
 			
 		{
 			_dbContext = dbContext;
@@ -39,10 +41,12 @@ namespace Repositories.Common
 			_categoryRepository = categoryRepository;
 			_sizeRepository = sizeRepository;
 			_productSizeRepository = productSizeRepository;
+			_feedBackRepository = feedBackRepository;
 		}
 
 		public AppDbContext DbContext => _dbContext;
 		public IAccountRepository AccountRepository => _accountRepository;
+		public IFeedBackRepository FeedBackRepository => _feedBackRepository;
         public IProductRepository ProductRepository => _productRepository;
         public IProductSizeRepository ProductSizeRepository => _productSizeRepository;
 

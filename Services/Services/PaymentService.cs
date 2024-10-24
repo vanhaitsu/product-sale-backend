@@ -64,7 +64,7 @@ namespace Services.Services
                     AccountID = newOrder.AccountID.ToString(),
                     Amount = (double)newOrder.Payment.Amount,
                     CustomerName = cart.Account.FirstName + cart.Account.LastName,
-                    BookingID = cart.Id.ToString(),
+                    BookingID = newOrder.Id.ToString(),
                 };
                 result.Message = "Payment successfully.";
                 result.Status = true;
